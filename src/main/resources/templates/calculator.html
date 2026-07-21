@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator App</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .container{
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.2);
+            width:350px;
+            text-align:center;
+        }
+
+        input,select,button{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+            font-size:16px;
+        }
+
+        button{
+            background:#007bff;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#0056b3;
+        }
+
+        h2{
+            color:green;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Calculator</h1>
+
+    <form action="/calculate" method="post">
+
+        <input type="number" step="any" name="num1" placeholder="Enter First Number" required>
+
+        <input type="number" step="any" name="num2" placeholder="Enter Second Number" required>
+
+        <select name="operation">
+            <option value="add">Addition (+)</option>
+            <option value="sub">Subtraction (-)</option>
+            <option value="mul">Multiplication (*)</option>
+            <option value="div">Division (/)</option>
+        </select>
+
+        <button type="submit">Calculate</button>
+
+    </form>
+
+    <h2 th:if="${result != null}">
+        Result: <span th:text="${result}"></span>
+    </h2>
+
+</div>
+
+</body>
+</html>
