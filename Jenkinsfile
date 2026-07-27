@@ -14,14 +14,14 @@ pipeline {
             }
         }
 
-       stage('Build JAR') {
-    steps {
-        sh '''
-            chmod +x mvnw
-            ./mvnw clean package
-        '''
-    }
-}
+        stage('Build JAR') {
+            steps {
+                sh '''
+                    chmod +x mvnw
+                    ./mvnw clean package
+                '''
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -46,23 +46,27 @@ pipeline {
                 sh 'docker push $IMAGE_NAME:$TAG'
             }
         }
-    }
-    stage('Deploy') {
-    steps {
-        sh '''
-        docker pull usmaan12345/springboot-app:latest
 
-        docker stop spring-app || true
-        docker rm spring-app || true
 
-        docker run -d \
-        --name spring-app \
-        --network app-network \
-        -p 8081:8080 \
-        usmaan12345/springboot-app:latest
-        '''
+        stage('Deploy') {
+            steps {
+                sh '''
+                docker pull usmaan12345/springboot-app:latest
+
+                docker stop spring-app || true
+                docker rm spring-app || true
+
+                docker run -d \
+                --name spring-app \
+                --network app-network \
+                -p 8081:8080 \
+                usmaan12345/springboot-app:latest
+                '''
+            }
+        }
+
     }
-}
+
 
     post {
         always {
