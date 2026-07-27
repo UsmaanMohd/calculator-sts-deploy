@@ -17,6 +17,9 @@ pipeline {
         stage('Build JAR') {
             steps {
                 sh '''
+                    echo "===== APPLICATION PROPERTIES ====="
+                    cat src/main/resources/application.properties
+
                     chmod +x mvnw
                     ./mvnw clean package
                 '''
@@ -47,26 +50,23 @@ pipeline {
             }
         }
 
-
         stage('Deploy') {
             steps {
                 sh '''
-                docker pull usmaan12345/springboot-app:latest
+                    docker pull usmaan12345/springboot-app:latest
 
-                docker stop spring-app || true
-                docker rm spring-app || true
+                    docker stop spring-app || true
+                    docker rm spring-app || true
 
-                docker run -d \
-                --name spring-app \
-                --network app-network \
-                -p 8081:8080 \
-                usmaan12345/springboot-app:latest
+                    docker run -d \
+                    --name spring-app \
+                    --network app-network \
+                    -p 8081:8080 \
+                    usmaan12345/springboot-app:latest
                 '''
             }
         }
-
     }
-
 
     post {
         always {
