@@ -14,11 +14,14 @@ pipeline {
             }
         }
 
-        stage('Build JAR') {
-            steps {
-                sh './mvnw clean package'
-            }
-        }
+       stage('Build JAR') {
+    steps {
+        sh '''
+            chmod +x mvnw
+            ./mvnw clean package
+        '''
+    }
+}
 
         stage('Build Docker Image') {
             steps {
