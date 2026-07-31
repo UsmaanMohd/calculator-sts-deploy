@@ -6,14 +6,13 @@ I also set up a full CI/CD pipeline for this project using Jenkins and Docker, s
 
 ## 3-Layer Architecture
 
-```
+
 Presentation Layer  ->  Business Layer  ->  Database Layer
   (Thymeleaf UI)         (Service/Logic)      (MongoDB)
-```
 
-- **Presentation Layer** – HTML + Thymeleaf, takes input from the user
-- **Business Layer** – Spring Boot controller + service, does the actual calculation
-- **Database Layer** – MongoDB, stores the calculation history
+-Presentation Layer – HTML + Thymeleaf, takes input from the user
+-Business Layer – Spring Boot controller + service, does the actual calculation
+-Database Layer – MongoDB, stores the calculation history
 
 ## Tech Used
 
@@ -55,27 +54,23 @@ src/main/resources
 Dockerfile
 Jenkinsfile
 pom.xml
-```
 
 ## Docker Setup
 
 App and MongoDB run as separate containers on the same Docker network so they can talk to each other.
 
-```
 docker network: app-network
  ├── spring-app (port 8080)
  └── mongo (port 27017)
-```
-
+ 
 ## How to run locally
 
-```bash
+  -bash
 ./mvnw clean package
 docker build -t calculator-app .
 docker network create app-network
 docker run -d --name mongo --network app-network mongo:6.0
 docker run -d --name spring-app --network app-network -p 8081:8080 calculator-app
-```
 
 App runs at `http://localhost:8081/calculate`
 
@@ -83,7 +78,7 @@ App runs at `http://localhost:8081/calculate`
 
 Database: `calculatordb`
 
-Stores: example
+Stores:Example
 {
     _id: ObjectId('6a6c6e962814ce9acedba45c'),
     firstNumber: 445,
