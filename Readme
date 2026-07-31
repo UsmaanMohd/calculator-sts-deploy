@@ -1,0 +1,94 @@
+# 3-Layer Calculator App (Spring Boot + MongoDB) with CI/CD
+
+This is a calculator web app made using Spring Boot, built with a proper 3-layer architecture. It does basic calculations (add, subtract, multiply, divide) and saves every calculation in MongoDB.
+
+I also set up a full CI/CD pipeline for this project using Jenkins and Docker, so the whole thing builds and deploys automatically.
+
+## 3-Layer Architecture
+
+```
+Presentation Layer  ->  Business Layer  ->  Database Layer
+  (Thymeleaf UI)         (Service/Logic)      (MongoDB)
+```
+
+- **Presentation Layer** – HTML + Thymeleaf, takes input from the user
+- **Business Layer** – Spring Boot controller + service, does the actual calculation
+- **Database Layer** – MongoDB, stores the calculation history
+
+## Tech Used
+
+- Java 21
+- Spring Boot
+- Spring MVC
+- Spring Data MongoDB
+- Thymeleaf
+- Maven
+- MongoDB
+- Docker
+- Jenkins
+- Git & GitHub
+- Ubuntu Server
+
+## CI/CD Pipeline
+
+```
+Push code to GitHub -> Jenkins builds project -> Maven creates jar ->
+Docker image built -> Image pushed to Docker Hub -> Deployed on Ubuntu server ->
+Spring Boot + MongoDB containers run
+```
+
+Jenkins does the whole thing automatically whenever I push new code — I don't have to build or deploy anything manually.
+
+## Project Structure
+
+```
+src/main/java
+ ├── controller
+ ├── service
+ ├── model
+ └── repository
+
+src/main/resources
+ ├── templates
+ └── application.properties
+
+Dockerfile
+Jenkinsfile
+pom.xml
+```
+
+## Docker Setup
+
+App and MongoDB run as separate containers on the same Docker network so they can talk to each other.
+
+```
+docker network: app-network
+ ├── spring-app (port 8080)
+ └── mongo (port 27017)
+```
+
+## How to run locally
+
+```bash
+./mvnw clean package
+docker build -t calculator-app .
+docker network create app-network
+docker run -d --name mongo --network app-network mongo:6.0
+docker run -d --name spring-app --network app-network -p 8081:8080 calculator-app
+```
+
+App runs at `http://localhost:8081/calculate`
+
+## Database
+
+Database: `calculatordb`
+
+Stores: example
+{
+    _id: ObjectId('6a6c6e962814ce9acedba45c'),
+    firstNumber: 445,
+    secondNumber: 5,
+    operation: '-',
+    result: 440,
+    _class: 'com.example.demo.model.Calculation'
+  }
