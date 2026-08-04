@@ -34,13 +34,11 @@ Presentation Layer  ->  Business Layer  ->  Database Layer
 Push code to GitHub -> Jenkins builds project -> Maven creates jar ->
 Docker image built -> Image pushed to Docker Hub -> Deployed on Ubuntu server ->
 Spring Boot + MongoDB containers run
-```
 
 Jenkins does the whole thing automatically whenever I push new code — I don't have to build or deploy anything manually.
 
 ## Project Structure
 
-```
 src/main/java
  ├── controller
  ├── service
